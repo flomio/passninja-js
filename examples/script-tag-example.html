@@ -1,0 +1,69 @@
+<html>
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+    crossorigin="anonymous"
+  />
+  <script type="module" src="../dist/passninja.umd.js"></script>
+  <body>
+    <div>
+      <table border="2">
+        <thead>
+          <th>Pass Type</th>
+          <th>Serial Number</th>
+          <th>Discount</th>
+          <th>MemberName</th>
+          <th>Install Page</th>
+        </thead>
+        <tbody #data></tbody>
+      </table>
+    </div>
+    <script>
+      console.log(window.passNinjaClient);
+      console.log(window.PassNinjaClient);
+      console.log(window.passninja);
+      console.log(window);
+
+      // Check https://passninja.com/auth/profile for your credentials
+      // The below are demo user credentials
+      const accountId = '3a6bc54c-78be-4d63-b804-3164597cae4c';
+      const apiKey = 'lw9BrOkj4O9owCzuwZXzC3kGdAXg8SN01yYmxIGf';
+
+      const passNinjaClient = new PassNinjaClient(accountId, apiKey);
+
+      passNinjaClient.pass
+        .create({
+          passType: 'demo.coupon',
+          pass: {
+            discount: '100%',
+            memberName: 'Auston',
+          },
+          expires: new Date(2020, 09, 12),
+        })
+        .then(({body}) => {
+          console.log(JSON.stringify(body, 0, 2));
+          const tblRow =
+            '<tr>' +
+            '<td>' +
+            body.passType +
+            '</td>' +
+            '<td>' +
+            body.serialNumber +
+            '</td>' +
+            '<td>' +
+            body.pass.discount +
+            '</td>' +
+            '<td>' +
+            body.pass.memberName +
+            '</td>' +
+            '<td><a href=' +
+            body.urls.landing +
+            '></a></td>' +
+            '</tr>';
+          document.getElementById('data').innerHTML = tblRow;
+        })
+        .catch((err) => console.log(JSON.stringify(err.body.message, 0, 2)));
+    </script>
+  </body>
+</html>

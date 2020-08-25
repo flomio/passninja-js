@@ -6,56 +6,69 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var localVarRequest__default = /*#__PURE__*/_interopDefaultLegacy(localVarRequest);
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+/* global Reflect, Promise */
+var extendStatics = function (d, b) {
+  extendStatics = Object.setPrototypeOf || {
+    __proto__: []
+  } instanceof Array && function (d, b) {
+    d.__proto__ = b;
+  } || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+  };
+
+  return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+  extendStatics(d, b);
+
+  function __() {
+    this.constructor = d;
   }
+
+  d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 }
 
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
+var Image =
+/** @class */
+function () {
+  function Image() {}
 
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
+  Image.getAttributeTypeMap = function () {
+    return Image.attributeTypeMap;
+  };
 
-var Image = /*#__PURE__*/function () {
-  function Image() {
-    _classCallCheck(this, Image);
-  }
-
-  _createClass(Image, null, [{
-    key: "getAttributeTypeMap",
-    value: function getAttributeTypeMap() {
-      return Image.attributeTypeMap;
-    }
-  }]);
-
+  Image.discriminator = undefined;
+  Image.attributeTypeMap = [{
+    name: 'type',
+    baseName: 'type',
+    type: 'Image.TypeEnum'
+  }, {
+    name: 'url',
+    baseName: 'url',
+    type: 'string'
+  }, {
+    name: 'resolutions',
+    baseName: 'resolutions',
+    type: 'Array<Resolution>'
+  }];
   return Image;
 }();
-Image.discriminator = undefined;
-Image.attributeTypeMap = [{
-  name: 'type',
-  baseName: 'type',
-  type: 'Image.TypeEnum'
-}, {
-  name: 'url',
-  baseName: 'url',
-  type: 'string'
-}, {
-  name: 'resolutions',
-  baseName: 'resolutions',
-  type: 'Array<Resolution>'
-}];
 
 (function (Image) {
   var TypeEnum;
@@ -70,41 +83,71 @@ Image.attributeTypeMap = [{
   })(TypeEnum = Image.TypeEnum || (Image.TypeEnum = {}));
 })(Image || (Image = {}));
 /**
+ * An array of user specified images to upload and use in the pass.
+ */
+
+
+var ImageUrls =
+/** @class */
+function (_super) {
+  __extends(ImageUrls, _super);
+
+  function ImageUrls() {
+    return _super !== null && _super.apply(this, arguments) || this;
+  }
+
+  ImageUrls.discriminator = undefined;
+  return ImageUrls;
+}(Array);
+
+var Pass =
+/** @class */
+function (_super) {
+  __extends(Pass, _super);
+
+  function Pass() {}
+
+  Pass.getAttributeTypeMap = function () {
+    return Pass.attributeTypeMap;
+  };
+
+  Pass.discriminator = undefined;
+  Pass.attributeTypeMap = [];
+  return Pass;
+}(null);
+/**
  * A JSONPatch Pass as defined by RFC 6902
  */
 
-var PatchPassRequest = /*#__PURE__*/function () {
-  function PatchPassRequest() {
-    _classCallCheck(this, PatchPassRequest);
-  }
+var PatchPassRequest =
+/** @class */
+function () {
+  function PatchPassRequest() {}
 
-  _createClass(PatchPassRequest, null, [{
-    key: "getAttributeTypeMap",
-    value: function getAttributeTypeMap() {
-      return PatchPassRequest.attributeTypeMap;
-    }
-  }]);
+  PatchPassRequest.getAttributeTypeMap = function () {
+    return PatchPassRequest.attributeTypeMap;
+  };
 
+  PatchPassRequest.discriminator = undefined;
+  PatchPassRequest.attributeTypeMap = [{
+    name: 'op',
+    baseName: 'op',
+    type: 'PatchPassRequest.OpEnum'
+  }, {
+    name: 'path',
+    baseName: 'path',
+    type: 'string'
+  }, {
+    name: 'value',
+    baseName: 'value',
+    type: 'any'
+  }, {
+    name: 'from',
+    baseName: 'from',
+    type: 'string'
+  }];
   return PatchPassRequest;
 }();
-PatchPassRequest.discriminator = undefined;
-PatchPassRequest.attributeTypeMap = [{
-  name: 'op',
-  baseName: 'op',
-  type: 'PatchPassRequest.OpEnum'
-}, {
-  name: 'path',
-  baseName: 'path',
-  type: 'string'
-}, {
-  name: 'value',
-  baseName: 'value',
-  type: 'any'
-}, {
-  name: 'from',
-  baseName: 'from',
-  type: 'string'
-}];
 
 (function (PatchPassRequest) {
   var OpEnum;
@@ -122,41 +165,37 @@ var enumsMap = {
   'Image.TypeEnum': Image.TypeEnum,
   'PatchPassRequest.OpEnum': PatchPassRequest.OpEnum
 };
-var ApiKeyAuth = /*#__PURE__*/function () {
-  function ApiKeyAuth(location, paramName) {
-    _classCallCheck(this, ApiKeyAuth);
 
+var ApiKeyAuth =
+/** @class */
+function () {
+  function ApiKeyAuth(location, paramName) {
     this.location = location;
     this.paramName = paramName;
     this.apiKey = '';
   }
 
-  _createClass(ApiKeyAuth, [{
-    key: "applyToRequest",
-    value: function applyToRequest(requestOptions) {
-      if (this.location == 'query') {
-        requestOptions.qs[this.paramName] = this.apiKey;
-      } else if (this.location == 'header' && requestOptions && requestOptions.headers) {
-        requestOptions.headers[this.paramName] = this.apiKey;
-      }
+  ApiKeyAuth.prototype.applyToRequest = function (requestOptions) {
+    if (this.location == 'query') {
+      requestOptions.qs[this.paramName] = this.apiKey;
+    } else if (this.location == 'header' && requestOptions && requestOptions.headers) {
+      requestOptions.headers[this.paramName] = this.apiKey;
     }
-  }]);
+  };
 
   return ApiKeyAuth;
 }();
-var VoidAuth = /*#__PURE__*/function () {
-  function VoidAuth() {
-    _classCallCheck(this, VoidAuth);
 
+var VoidAuth =
+/** @class */
+function () {
+  function VoidAuth() {
     this.username = '';
     this.password = '';
   }
 
-  _createClass(VoidAuth, [{
-    key: "applyToRequest",
-    value: function applyToRequest() {// Do nothing
-    }
-  }]);
+  VoidAuth.prototype.applyToRequest = function () {// Do nothing
+  };
 
   return VoidAuth;
 }();
@@ -170,7 +209,7 @@ var PassNinjaApiKeys;
 var validateRequestArguments = function validateRequestArguments(requestArgs, callingFunction) {
   Object.keys(requestArgs).forEach(function (argumentName) {
     if (requestArgs[argumentName] === null || requestArgs[argumentName] === undefined) {
-      throw new Error("Required parameter ".concat(argumentName, " was null or undefined when calling ").concat(callingFunction, "."));
+      throw new Error("Required parameter " + argumentName + " was null or undefined when calling " + callingFunction + ".");
     }
   });
 };
@@ -196,12 +235,13 @@ var responseResolver = function responseResolver(requestOptions) {
   });
 };
 
+//  /// <reference types="passninja-js" />
 var PASSNINJA_BASE_PATH = 'https://api.passninja.com/create-response';
 
-var Client = /*#__PURE__*/function () {
-  function Client(accountId, apiKey) {
-    _classCallCheck(this, Client);
-
+var PassNinjaClient =
+/** @class */
+function () {
+  function PassNinjaClient(accountId, apiKey) {
     this.defaultHeaders = {};
     this.basePath = PASSNINJA_BASE_PATH;
     this.useQuerystring = false;
@@ -224,213 +264,221 @@ var Client = /*#__PURE__*/function () {
     this.pass.getVerbose = this.getPassVerbose.bind(this);
   }
 
-  _createClass(Client, [{
-    key: "setDefaultAuthentication",
-    value: function setDefaultAuthentication(auth) {
-      this.authentications["default"] = auth;
-    }
-  }, {
-    key: "setAuthentication",
-    value: function setAuthentication(accountId, apiKey) {
-      this.setApiKey(PassNinjaApiKeys.api_key, apiKey);
-      this.setApiKey(PassNinjaApiKeys.account_id, accountId);
-    }
-  }, {
-    key: "setApiKey",
-    value: function setApiKey(key, value) {
-      this.authentications[PassNinjaApiKeys[key]].apiKey = value;
-    }
-  }, {
-    key: "setRequestAuthentication",
-    value: function setRequestAuthentication(requestOptions) {
-      this.authentications.account_id.applyToRequest(requestOptions);
-      this.authentications.api_key.applyToRequest(requestOptions);
-      this.authentications["default"].applyToRequest(requestOptions);
-    }
-  }, {
-    key: "resolveHeaders",
-    value: function resolveHeaders() {
-      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var headers = Object.assign({}, this.defaultHeaders);
-      Object.assign(headers, options.headers);
-      return headers;
-    }
-    /**
-     *
-     * @summary Create a new PassNinja pass
-     * @param body The pass type, expiration time and any template variables you want to set in the created pass.
-     * @param {*} [options] Override http request options.
-     */
+  PassNinjaClient.prototype.setDefaultAuthentication = function (auth) {
+    this.authentications["default"] = auth;
+  };
 
-  }, {
-    key: "createPass",
-    value: function createPass(body) {
-      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      validateRequestArguments({
-        body: body
-      }, 'createPass');
-      var localVarPath = this.basePath + '/passes';
-      var localVarHeaderParams = this.resolveHeaders(options);
-      var localVarRequestOptions = {
-        method: 'POST',
-        headers: localVarHeaderParams,
-        uri: localVarPath,
-        useQuerystring: this.useQuerystring,
-        json: true,
-        body: body
-      };
-      this.setRequestAuthentication(localVarRequestOptions);
-      return responseResolver(localVarRequestOptions);
-    }
-    /**
-     *
-     * @summary Delete (archive) an existing PassNinja pass
-     * @param passType PassNinja pass type you are querying.
-     * @param serialNumber Pass serial number you want to query.
-     * @param {*} [options] Override http request options.
-     */
+  PassNinjaClient.prototype.setAuthentication = function (accountId, apiKey) {
+    this.setApiKey(PassNinjaApiKeys.api_key, apiKey);
+    this.setApiKey(PassNinjaApiKeys.account_id, accountId);
+  };
 
-  }, {
-    key: "deletePass",
-    value: function deletePass(passType, serialNumber) {
-      var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-      validateRequestArguments({
-        passType: passType,
-        serialNumber: serialNumber
-      }, 'deletePass');
-      var localVarPath = this.basePath + "/passes/".concat(encodeURIComponent(passType), "/").concat(encodeURIComponent(serialNumber));
-      var localVarHeaderParams = this.resolveHeaders(options);
-      var localVarRequestOptions = {
-        method: 'DELETE',
-        headers: localVarHeaderParams,
-        uri: localVarPath,
-        useQuerystring: this.useQuerystring,
-        json: true
-      };
-      this.setRequestAuthentication(localVarRequestOptions);
-      return responseResolver(localVarRequestOptions);
-    }
-    /**
-     *
-     * @summary Retrieve an existing PassNinja pass
-     * @param passType PassNinja pass type you are querying.
-     * @param serialNumber Pass serial number you want to query.
-     * @param {*} [options] Override http request options.
-     */
+  PassNinjaClient.prototype.setApiKey = function (key, value) {
+    this.authentications[PassNinjaApiKeys[key]].apiKey = value;
+  };
 
-  }, {
-    key: "getPass",
-    value: function getPass(passType, serialNumber) {
-      var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-      validateRequestArguments({
-        passType: passType,
-        serialNumber: serialNumber
-      }, 'getPass');
-      var localVarPath = this.basePath + "/passes/".concat(encodeURIComponent(passType), "/").concat(encodeURIComponent(serialNumber));
-      var localVarHeaderParams = this.resolveHeaders(options);
-      var localVarRequestOptions = {
-        method: 'GET',
-        headers: localVarHeaderParams,
-        uri: localVarPath,
-        useQuerystring: this.useQuerystring,
-        json: true
-      };
-      this.setRequestAuthentication(localVarRequestOptions);
-      return responseResolver(localVarRequestOptions);
-    }
-    /**
-     *
-     * @summary Retrieve an existing PassNinja pass apple/google JSON file contents.
-     * @param passType PassNinja pass type you are querying.
-     * @param serialNumber Pass serial number you want to query.
-     * @param {*} [options] Override http request options.
-     */
+  PassNinjaClient.prototype.setRequestAuthentication = function (requestOptions) {
+    this.authentications.account_id.applyToRequest(requestOptions);
+    this.authentications.api_key.applyToRequest(requestOptions);
+    this.authentications["default"].applyToRequest(requestOptions);
+  };
 
-  }, {
-    key: "getPassVerbose",
-    value: function getPassVerbose(passType, serialNumber) {
-      var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-      validateRequestArguments({
-        passType: passType,
-        serialNumber: serialNumber
-      }, 'getPassVerbose');
-      var localVarPath = this.basePath + "/passes/".concat(encodeURIComponent(String(passType)), "/").concat(encodeURIComponent(String(serialNumber)), "/verbose");
-      var localVarHeaderParams = this.resolveHeaders(options);
-      var localVarRequestOptions = {
-        method: 'GET',
-        headers: localVarHeaderParams,
-        uri: localVarPath,
-        useQuerystring: this.useQuerystring,
-        json: true
-      };
-      this.setRequestAuthentication(localVarRequestOptions);
-      return responseResolver(localVarRequestOptions);
+  PassNinjaClient.prototype.resolveHeaders = function (options) {
+    if (options === void 0) {
+      options = {};
     }
-    /**
-     *
-     * @summary Update an existing PassNinja pass using RFC 6902
-     * @param passType PassNinja pass type you want to create.
-     * @param serialNumber Pass serial number you want to query.
-     * @param body The pass type, expiration time and any template variables you want to set in the created pass.
-     * @param {*} [options] Override http request options.
-     */
 
-  }, {
-    key: "patchPass",
-    value: function patchPass(passType, serialNumber, body) {
-      var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-      validateRequestArguments({
-        passType: passType,
-        serialNumber: serialNumber,
-        body: body
-      }, 'patchPass');
-      var localVarPath = this.basePath + "/passes/".concat(encodeURIComponent(String(passType)), "/").concat(encodeURIComponent(String(serialNumber)));
-      var localVarHeaderParams = this.resolveHeaders(options);
-      var localVarRequestOptions = {
-        method: 'PATCH',
-        headers: localVarHeaderParams,
-        uri: localVarPath,
-        useQuerystring: this.useQuerystring,
-        json: true,
-        body: body
-      };
-      this.setRequestAuthentication(localVarRequestOptions);
-      return responseResolver(localVarRequestOptions);
+    var headers = Object.assign({}, this.defaultHeaders);
+    Object.assign(headers, options.headers);
+    return headers;
+  };
+  /**
+   *
+   * @summary Create a new PassNinja pass
+   * @param body The pass type, expiration time and any template variables you want to set in the created pass.
+   * @param {*} [options] Override http request options.
+   */
+
+
+  PassNinjaClient.prototype.createPass = function (body, options) {
+    if (options === void 0) {
+      options = {};
     }
-    /**
-     *
-     * @summary Update an existing PassNinja pass
-     * @param body The pass type, expiration time and any template variables you want to set in the created pass.
-     * @param passType PassNinja pass type you want to modify.
-     * @param serialNumber Pass serial number you want to modify.
-     * @param {*} [options] Override http request options.
-     */
 
-  }, {
-    key: "putPass",
-    value: function putPass(body, passType, serialNumber) {
-      var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-      validateRequestArguments({
-        passType: passType,
-        serialNumber: serialNumber,
-        body: body
-      }, 'patchPass');
-      var localVarPath = this.basePath + "/passes/".concat(encodeURIComponent(String(passType)), "/").concat(encodeURIComponent(String(serialNumber)));
-      var localVarHeaderParams = this.resolveHeaders(options);
-      var localVarRequestOptions = {
-        method: 'PUT',
-        headers: localVarHeaderParams,
-        uri: localVarPath,
-        useQuerystring: this.useQuerystring,
-        json: true,
-        body: body
-      };
-      this.setRequestAuthentication(localVarRequestOptions);
-      return responseResolver(localVarRequestOptions);
+    validateRequestArguments({
+      body: body
+    }, 'createPass');
+    var localVarPath = this.basePath + '/passes';
+    var localVarHeaderParams = this.resolveHeaders(options);
+    var localVarRequestOptions = {
+      method: 'POST',
+      headers: localVarHeaderParams,
+      uri: localVarPath,
+      useQuerystring: this.useQuerystring,
+      json: true,
+      body: body
+    };
+    this.setRequestAuthentication(localVarRequestOptions);
+    return responseResolver(localVarRequestOptions);
+  };
+  /**
+   *
+   * @summary Delete (archive) an existing PassNinja pass
+   * @param passType PassNinja pass type you are querying.
+   * @param serialNumber Pass serial number you want to query.
+   * @param {*} [options] Override http request options.
+   */
+
+
+  PassNinjaClient.prototype.deletePass = function (passType, serialNumber, options) {
+    if (options === void 0) {
+      options = {};
     }
-  }]);
 
-  return Client;
+    validateRequestArguments({
+      passType: passType,
+      serialNumber: serialNumber
+    }, 'deletePass');
+    var localVarPath = this.basePath + ("/passes/" + encodeURIComponent(passType) + "/" + encodeURIComponent(serialNumber));
+    var localVarHeaderParams = this.resolveHeaders(options);
+    var localVarRequestOptions = {
+      method: 'DELETE',
+      headers: localVarHeaderParams,
+      uri: localVarPath,
+      useQuerystring: this.useQuerystring,
+      json: true
+    };
+    this.setRequestAuthentication(localVarRequestOptions);
+    return responseResolver(localVarRequestOptions);
+  };
+  /**
+   *
+   * @summary Retrieve an existing PassNinja pass
+   * @param passType PassNinja pass type you are querying.
+   * @param serialNumber Pass serial number you want to query.
+   * @param {*} [options] Override http request options.
+   */
+
+
+  PassNinjaClient.prototype.getPass = function (passType, serialNumber, options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    validateRequestArguments({
+      passType: passType,
+      serialNumber: serialNumber
+    }, 'getPass');
+    var localVarPath = this.basePath + ("/passes/" + encodeURIComponent(passType) + "/" + encodeURIComponent(serialNumber));
+    var localVarHeaderParams = this.resolveHeaders(options);
+    var localVarRequestOptions = {
+      method: 'GET',
+      headers: localVarHeaderParams,
+      uri: localVarPath,
+      useQuerystring: this.useQuerystring,
+      json: true
+    };
+    this.setRequestAuthentication(localVarRequestOptions);
+    return responseResolver(localVarRequestOptions);
+  };
+  /**
+   *
+   * @summary Retrieve an existing PassNinja pass apple/google JSON file contents.
+   * @param passType PassNinja pass type you are querying.
+   * @param serialNumber Pass serial number you want to query.
+   * @param {*} [options] Override http request options.
+   */
+
+
+  PassNinjaClient.prototype.getPassVerbose = function (passType, serialNumber, options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    validateRequestArguments({
+      passType: passType,
+      serialNumber: serialNumber
+    }, 'getPassVerbose');
+    var localVarPath = this.basePath + ("/passes/" + encodeURIComponent(String(passType)) + "/" + encodeURIComponent(String(serialNumber)) + "/verbose");
+    var localVarHeaderParams = this.resolveHeaders(options);
+    var localVarRequestOptions = {
+      method: 'GET',
+      headers: localVarHeaderParams,
+      uri: localVarPath,
+      useQuerystring: this.useQuerystring,
+      json: true
+    };
+    this.setRequestAuthentication(localVarRequestOptions);
+    return responseResolver(localVarRequestOptions);
+  };
+  /**
+   *
+   * @summary Update an existing PassNinja pass using RFC 6902
+   * @param passType PassNinja pass type you want to create.
+   * @param serialNumber Pass serial number you want to query.
+   * @param body The pass type, expiration time and any template variables you want to set in the created pass.
+   * @param {*} [options] Override http request options.
+   */
+
+
+  PassNinjaClient.prototype.patchPass = function (passType, serialNumber, body, options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    validateRequestArguments({
+      passType: passType,
+      serialNumber: serialNumber,
+      body: body
+    }, 'patchPass');
+    var localVarPath = this.basePath + ("/passes/" + encodeURIComponent(String(passType)) + "/" + encodeURIComponent(String(serialNumber)));
+    var localVarHeaderParams = this.resolveHeaders(options);
+    var localVarRequestOptions = {
+      method: 'PATCH',
+      headers: localVarHeaderParams,
+      uri: localVarPath,
+      useQuerystring: this.useQuerystring,
+      json: true,
+      body: body
+    };
+    this.setRequestAuthentication(localVarRequestOptions);
+    return responseResolver(localVarRequestOptions);
+  };
+  /**
+   *
+   * @summary Update an existing PassNinja pass
+   * @param body The pass type, expiration time and any template variables you want to set in the created pass.
+   * @param passType PassNinja pass type you want to modify.
+   * @param serialNumber Pass serial number you want to modify.
+   * @param {*} [options] Override http request options.
+   */
+
+
+  PassNinjaClient.prototype.putPass = function (body, passType, serialNumber, options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    validateRequestArguments({
+      passType: passType,
+      serialNumber: serialNumber,
+      body: body
+    }, 'patchPass');
+    var localVarPath = this.basePath + ("/passes/" + encodeURIComponent(String(passType)) + "/" + encodeURIComponent(String(serialNumber)));
+    var localVarHeaderParams = this.resolveHeaders(options);
+    var localVarRequestOptions = {
+      method: 'PUT',
+      headers: localVarHeaderParams,
+      uri: localVarPath,
+      useQuerystring: this.useQuerystring,
+      json: true,
+      body: body
+    };
+    this.setRequestAuthentication(localVarRequestOptions);
+    return responseResolver(localVarRequestOptions);
+  };
+
+  return PassNinjaClient;
 }();
 
-module.exports = Client;
+module.exports = PassNinjaClient;
