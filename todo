@@ -1,0 +1,3 @@
+[] Create a type for the response from PassNinja API
+[] Create an endpoint for fetching available passtypes
+[] Generate jsdoc
