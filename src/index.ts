@@ -17,7 +17,7 @@ import {validateRequestArguments, responseResolver} from './utils';
 
 const PASSNINJA_BASE_PATH = 'https://api.passninja.com/create-response';
 
-export default class Client {
+export default class PassNinjaClient {
   protected defaultHeaders: any = {};
   protected basePath = PASSNINJA_BASE_PATH;
   protected useQuerystring = false;
