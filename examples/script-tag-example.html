@@ -3,6 +3,7 @@
     href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
     rel="stylesheet"
   />
+  <!-- TODO: This should be integrated via rollup -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <!-- TODO: This should be a CDN source. -->
   <script src="../dist/passninja.umd.js"></script>
@@ -69,39 +70,41 @@
         .then((data) => {
           document.getElementById('spinner').className = '';
           console.log(JSON.stringify(data, 0, 2));
-          const tableHead = document.getElementById('headers');
-          const tableData = document.getElementById('data');
-          const dataRow = document.createElement('tr');
-          Object.keys(data).forEach((key) => {
-            let entry = data[key];
-
-            const header = document.createElement('th');
-            header.className =
-              'w-1/3 py-3 px-4 uppercase font-semibold text-sm';
-            header.innerText = key;
-            tableHead.appendChild(header);
-
-            const dataCell = document.createElement('td');
-            dataCell.className = 'w-1/3 text-left py-3 px-4';
-
-            if (key === 'urls') {
-              entry = data[key].landing;
-              const ahref = document.createElement('a');
-              ahref.href = entry;
-              ahref.className = 'hover:text-blue-500';
-              ahref.innerText = 'Install Page';
-              dataCell.appendChild(ahref);
-              console.log(ahref);
-            } else {
-              entry = typeof entry === 'string' ? entry : JSON.stringify(entry);
-              dataCell.innerText = entry;
-            }
-
-            dataRow.appendChild(dataCell);
-          });
-          tableData.appendChild(dataRow);
+          buildTable(data);
         })
         .catch((err) => console.log(err));
+
+      const buildTable = (data) => {
+        const tableHead = document.getElementById('headers');
+        const tableData = document.getElementById('data');
+        const dataRow = document.createElement('tr');
+        Object.keys(data).forEach((key) => {
+          let entry = data[key];
+
+          const header = document.createElement('th');
+          header.className = 'w-1/3 py-3 px-4 uppercase font-semibold text-sm';
+          header.innerText = key;
+          tableHead.appendChild(header);
+
+          const dataCell = document.createElement('td');
+          dataCell.className = 'w-1/3 text-left py-3 px-4';
+
+          if (key === 'urls') {
+            entry = data[key].landing;
+            const ahref = document.createElement('a');
+            ahref.href = entry;
+            ahref.className = 'hover:text-blue-500';
+            ahref.innerText = 'Install Page';
+            dataCell.appendChild(ahref);
+          } else {
+            entry = typeof entry === 'string' ? entry : JSON.stringify(entry);
+            dataCell.innerText = entry;
+          }
+
+          dataRow.appendChild(dataCell);
+        });
+        tableData.appendChild(dataRow);
+      };
     </script>
   </body>
 </html>

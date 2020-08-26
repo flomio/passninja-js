@@ -7,7 +7,7 @@ import json from '@rollup/plugin-json';
 
 import builtins from 'rollup-plugin-node-builtins';
 import globals from 'rollup-plugin-node-globals';
-// import terser from 'rollup-plugin-terser';
+import {uglify} from 'rollup-plugin-uglify';
 
 import pkg from './package.json';
 
@@ -38,6 +38,7 @@ const WEB_PLUGINS = [
   globals(),
   builtins(),
   json(), // so Rollup can find/import JSON files
+  uglify(),
 ];
 const EXTERNALS = [...Object.keys(pkg.dependencies || {})];
 
@@ -49,6 +50,9 @@ export default [
       file: pkg.browser,
       name: 'passninja',
       format: 'iife',
+      globals: {
+        axios: 'axios',
+      },
     },
     external: [
       ...EXTERNALS,

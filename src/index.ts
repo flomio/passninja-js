@@ -1,5 +1,3 @@
-//  /// <reference types="passninja-js" />
-
 import axios, {
   AxiosInstance,
   AxiosResponse,
