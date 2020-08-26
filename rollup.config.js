@@ -33,8 +33,8 @@ const PLUGINS = [
 
 const WEB_PLUGINS = [
   ...PLUGINS,
-  resolve({browser: true, preferBuiltins: false}), // so Rollup can find `request`
-  commonjs(), // so Rollup can convert `request` to an ES module
+  resolve({jsnext: true, preferBuiltins: true, browser: true}), // so Rollup can find `axios`
+  commonjs(), // so Rollup can convert `axios` to an ES module
   globals(),
   builtins(),
   json(), // so Rollup can find/import JSON files

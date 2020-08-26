@@ -86,7 +86,7 @@ export class PassNinjaClient {
     });
   };
 
-  #handleResponse = ({data}: AxiosResponse) => data;
+  #handleResponse = ({data}: AxiosResponse): AxiosResponse<any> => data;
 
   #handleError = (error: AxiosError): Promise<AxiosError> =>
     Promise.reject(error);

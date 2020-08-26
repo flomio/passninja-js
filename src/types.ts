@@ -1,4 +1,3 @@
-import {Options} from 'request';
 import {AxiosRequestConfig} from 'axios';
 
 interface attributeType {

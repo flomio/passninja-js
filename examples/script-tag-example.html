@@ -7,11 +7,38 @@
   <!-- TODO: This should be a CDN source. -->
   <script src="../dist/passninja.umd.js"></script>
 
+  <style>
+    @keyframes spinner {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .spinner:before {
+      content: '';
+      box-sizing: border-box;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 30px;
+      height: 30px;
+      margin-top: -15px;
+      margin-left: -15px;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+      border-top-color: #07d;
+      animation: spinner 0.6s linear infinite;
+    }
+  </style>
+
   <body>
     <div class="container mx-auto py-6 px-4">
-      <h1 class="text-3xl py-4 border-b mb-10">Create PassNinja Pass Example</h1>
+      <h1 class="text-3xl py-4 border-b mb-10">
+        Create PassNinja Pass Example
+      </h1>
       <div class="mb-4 flex justify-between items-center">
         <div class="flex-1 pr-4">
+          <div id="spinner" class="spinner"></div>
           <div class="shadow overflow-hidden rounded border-b border-gray-200">
             <table class="min-w-full bg-white">
               <thead id="headers" class="bg-gray-800 text-white"></thead>
@@ -40,11 +67,11 @@
           expires: new Date(2020, 09, 12),
         })
         .then((data) => {
+          document.getElementById('spinner').className = '';
           console.log(JSON.stringify(data, 0, 2));
           const tableHead = document.getElementById('headers');
           const tableData = document.getElementById('data');
           const dataRow = document.createElement('tr');
-          console.log(Object.keys(data));
           Object.keys(data).forEach((key) => {
             let entry = data[key];
 
