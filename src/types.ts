@@ -1,4 +1,5 @@
-import localVarRequest from 'request';
+import {Options} from 'request';
+import {AxiosRequestConfig} from 'axios';
 
 interface attributeType {
   name: string;
@@ -318,14 +319,14 @@ export interface Authentication {
   /**
    * Apply authentication settings to header and query params.
    */
-  applyToRequest(requestOptions: localVarRequest.Options): void;
+  applyToRequest(requestOptions: AxiosRequestConfig): void;
 }
 
 export class HttpBasicAuth implements Authentication {
   public username = '';
   public password = '';
 
-  applyToRequest(requestOptions: localVarRequest.Options): void {
+  applyToRequest(requestOptions: AxiosRequestConfig): void {
     requestOptions.auth = {
       username: this.username,
       password: this.password,
@@ -338,14 +339,8 @@ export class ApiKeyAuth implements Authentication {
 
   constructor(private location: string, private paramName: string) {}
 
-  applyToRequest(requestOptions: localVarRequest.Options): void {
-    if (this.location == 'query') {
-      (<any>requestOptions.qs)[this.paramName] = this.apiKey;
-    } else if (
-      this.location == 'header' &&
-      requestOptions &&
-      requestOptions.headers
-    ) {
+  applyToRequest(requestOptions: AxiosRequestConfig): void {
+    if (this.location == 'header' && requestOptions && requestOptions.headers) {
       requestOptions.headers[this.paramName] = this.apiKey;
     }
   }
@@ -354,7 +349,7 @@ export class ApiKeyAuth implements Authentication {
 export class OAuth implements Authentication {
   public accessToken = '';
 
-  applyToRequest(requestOptions: localVarRequest.Options): void {
+  applyToRequest(requestOptions: AxiosRequestConfig): void {
     if (requestOptions && requestOptions.headers) {
       requestOptions.headers['Authorization'] = 'Bearer ' + this.accessToken;
     }

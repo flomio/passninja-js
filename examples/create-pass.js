@@ -1,4 +1,5 @@
-const PassNinjaClient = require('../dist/passninja.js');
+// TODO: This should be an NPM package import after publishing.
+const {PassNinjaClient} = require('../dist/passninja.js');
 
 // Check https://passninja.com/auth/profile for your credentials
 // The below are demo user credentials
@@ -16,7 +17,7 @@ passNinjaClient.pass
     },
     expires: new Date(2020, 09, 12),
   })
-  .then(({body}) => {
-    console.log(JSON.stringify(body, 0, 2));
+  .then((data) => {
+    console.log(JSON.stringify(data, 0, 2));
   })
-  .catch((err) => console.log(JSON.stringify(err.body.message, 0, 2)));
+  .catch((err) => console.log(JSON.stringify(err, 0, 2)));

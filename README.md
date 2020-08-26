@@ -2,14 +2,14 @@
 
 Use [PassNinja-js](https://passninja.com/docs) as an ES module.
 
-[![npm version](https://img.shields.io/npm/v/@passninja/passninja-js.svg?style=flat-square)](https://www.npmjs.com/package/@passninja/passninja-js)
+[![npm version](https://img.shields.io/npm/v/@flomio/passninja-js.svg?style=flat-square)](https://www.npmjs.com/package/@flomio/passninja-js)
 
 ## Installation
 
 Use `npm` to install the passninja-js module:
 
 ```sh
-npm install @passninja/passninja-js
+npm install @flomio/passninja-js
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ This function returns a newly created `PassNinjaClient` object. Make sure to
 pass your user credentials to make any authenticated requests.
 
 ```js
-const PassNinjaClient = require('@passninja/passninja.js');
+const {PassNinjaClient} = require('@flomio/passninja.js');
 
 const accountId = '3a6bc54c-78be-4d63-b804-3164597cae4c';
 const apiKey = 'lw9BrOkj4O9owCzuwZXzC3kGdAXg8SN01yYmxIGf';

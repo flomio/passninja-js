@@ -1,18 +1,19 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "rootDir": "./src",
-    "module": "esnext",
+    "module": "es6",
     "moduleResolution": "node",
-    "noEmit": true,
     "allowJs": false,
     "declaration": false,
-    "removeComments": false,
+    "removeComments": true,
     "strict": true,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
-    "typeRoots": ["./types", "./node_modules/@types"]
+    "lib": ["es2015"],
+    "typeRoots": ["./dist", "./node_modules/@types"],
+    "sourceMap": true
   },
-  "exclude": ["node_modules", "typings"],
+  "exclude": ["node_modules", "dist"],
   "include": ["src"]
 }

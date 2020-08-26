@@ -5,21 +5,26 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 
-import nodePolyfills from 'rollup-plugin-node-polyfills';
 import builtins from 'rollup-plugin-node-builtins';
 import globals from 'rollup-plugin-node-globals';
-import terser from 'rollup-plugin-terser';
+// import terser from 'rollup-plugin-terser';
 
 import pkg from './package.json';
 
+const extensions = ['.ts', '.js'];
 const PLUGINS = [
   typescript({
     lib: ['es5', 'es6', 'dom'],
-    target: 'es5',
+    target: 'es2015',
     exclude: ['*.spec.ts'],
   }),
+  resolve({
+    jsnext: true,
+    extensions,
+  }),
   babel({
-    extensions: ['.ts', '.js', '.tsx', '.jsx'],
+    exclude: 'node_modules/**', // only transpile our source code
+    extensions,
   }),
   replace({
     _VERSION: JSON.stringify(pkg.version),
@@ -28,31 +33,48 @@ const PLUGINS = [
 
 const WEB_PLUGINS = [
   ...PLUGINS,
-  resolve({browser: true}), // so Rollup can find `request`
+  resolve({browser: true, preferBuiltins: false}), // so Rollup can find `request`
   commonjs(), // so Rollup can convert `request` to an ES module
-  json(), // so Rollup can find/import JSON files
-  nodePolyfills(),
-  terser(),
   globals(),
   builtins(),
+  json(), // so Rollup can find/import JSON files
 ];
+const EXTERNALS = [...Object.keys(pkg.dependencies || {})];
 
 export default [
+  // Browser Export
   {
     input: 'src/index.ts',
     output: {
-      name: 'passninja',
       file: pkg.browser,
+      name: 'passninja',
       format: 'iife',
     },
+    external: [
+      ...EXTERNALS,
+      'window',
+      'document',
+      'builtin-modules',
+      'resolve',
+      'browser-resolve',
+      'is-module',
+    ],
     plugins: WEB_PLUGINS,
   },
+  // Module exports
   {
     input: 'src/index.ts',
     output: [
-      {file: pkg.main, format: 'cjs'},
-      {file: pkg.module, format: 'es'},
+      {
+        file: pkg.main,
+        format: 'cjs',
+      },
+      {
+        file: pkg.module,
+        format: 'es',
+      },
     ],
+    external: EXTERNALS,
     plugins: PLUGINS,
   },
 ];
