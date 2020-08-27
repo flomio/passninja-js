@@ -6,9 +6,9 @@ const {PassNinjaClient} = require('../dist/passninja.js');
 const accountId = '3a6bc54c-78be-4d63-b804-3164597cae4c';
 const apiKey = 'lw9BrOkj4O9owCzuwZXzC3kGdAXg8SN01yYmxIGf';
 
-const passNinjaClient = new PassNinjaClient(accountId, apiKey);
+const passninja = new PassNinjaClient(accountId, apiKey);
 
-passNinjaClient.pass
+passninja.pass
   .create({
     passType: 'demo.coupon',
     pass: {
