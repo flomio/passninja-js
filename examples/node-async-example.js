@@ -1,5 +1,5 @@
 // TODO: This should be an NPM package import after publishing.
-const {PassNinjaClient} = require('@flomio/passninja-js');
+const {PassNinjaClient} = require('@passninja/passninja-js');
 
 // Check https://passninja.com/auth/profile for your credentials
 // The below are demo user credentials
