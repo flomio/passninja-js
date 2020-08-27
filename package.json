@@ -15,7 +15,7 @@
     "prebuild": "yarn clean",
     "build": "yarn clean && yarn rollup -c && yarn build:web",
     "build:web": "parcel build src/index.ts --global passninja --out-file passninja.umd.js",
-    "postbuild": "tsc --outDir dist/lib --declarationDir dist/types --declaration true --sourceMap true",
+    "postbuild": "tsc --emitDeclarationOnly --declarationDir dist/types --declaration true --sourceMap true",
     "predev": "yarn clean",
     "dev": "yarn rollup -c --watch",
     "prettier": "prettier './**/*.{js,ts,md,html,css}' --write",

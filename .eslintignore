@@ -2,4 +2,3 @@ dist
 node_modules
 examples
 tests/types
-jest.config.js
