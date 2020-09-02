@@ -80,7 +80,7 @@ class PassNinjaClient {
             if (Object.keys(invalidKeys).length !== 0) {
                 throw new PassNinjaInvalidArgumentsException(`Invalid templateStrings provided in clientPassData object. Invalid keys: ${JSON.stringify(invalidKeys)}`);
             }
-            return this.#axiosClient.put(`/passes/${encodeURIComponent(serialNumber)}`, {
+            return this.#axiosClient.put(`/passes/${encodeURIComponent(passType)}/${encodeURIComponent(serialNumber)}`, {
                 passType,
                 pass: clientPassData,
             });
@@ -89,7 +89,9 @@ class PassNinjaClient {
             if (!isString(serialNumber)) {
                 throw new PassNinjaInvalidArgumentsException('Must provide serialNumber to PassNinjaClient.deletePass method. PassNinjaClient.deletePass(serialNumber: string)');
             }
-            return this.#axiosClient.delete(`/passes/${encodeURIComponent(serialNumber)}`);
+            return this.#axiosClient
+                .delete(`/passes/${encodeURIComponent(serialNumber)}`)
+                .then(() => serialNumber);
         };
         if (!isString(accountId) || !isString(apiKey)) {
             throw new PassNinjaInvalidArgumentsException('Must provide both accountId and apiKey to PassNinjaClient constructor. PassNinjaClient(accountId: string, apiKey: string)');

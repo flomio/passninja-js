@@ -125,7 +125,9 @@ export class PassNinjaClient {
       );
     }
     return this.#axiosClient.put(
-      `/passes/${encodeURIComponent(serialNumber)}`,
+      `/passes/${encodeURIComponent(passType)}/${encodeURIComponent(
+        serialNumber
+      )}`,
       {
         passType,
         pass: clientPassData,
