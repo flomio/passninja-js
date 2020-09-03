@@ -51,21 +51,19 @@ class PassNinjaClient {
                 pass: clientPassData,
             })
                 .then((data) => ({
-                url: data.landingUrl,
-                serialNumber: data.apple.serialNumber,
-                passType,
+                url: data.urls.landing,
+                serialNumber: data.serialNumber,
+                passType: data.passType,
             }));
         };
         this.#getPass = (passType, serialNumber) => {
             if (!isString(passType) || !isString(serialNumber)) {
                 throw new PassNinjaInvalidArgumentsException('Must provide both passType and serialNumber to PassNinjaClient.getPass method. PassNinjaClient.getPass(passType: string, serialNumber: string)');
             }
-            return this.#axiosClient
-                .get(`/passes/${encodeURIComponent(passType)}/${encodeURIComponent(serialNumber)}`)
-                .then((data) => data.jsonData);
+            return this.#axiosClient.get(`/passes/${encodeURIComponent(passType)}/${encodeURIComponent(serialNumber)}`);
         };
         this.#putPass = (passType, serialNumber, clientPassData) => {
-            if (!isString(serialNumber)) {
+            if (!isString(passType) || !isString(serialNumber)) {
                 throw new PassNinjaInvalidArgumentsException('Must provide both passType and serialNumber to PassNinjaClient.putPass method. PassNinjaClient.putPass(passType: string, serialNumber: string, clientPassData: ClientPassData)');
             }
             const invalidKeys = this.#extractInvalidKeys(clientPassData);
@@ -77,12 +75,12 @@ class PassNinjaClient {
                 pass: clientPassData,
             });
         };
-        this.#deletePass = (serialNumber) => {
-            if (!isString(serialNumber)) {
-                throw new PassNinjaInvalidArgumentsException('Must provide serialNumber to PassNinjaClient.deletePass method. PassNinjaClient.deletePass(serialNumber: string)');
+        this.#deletePass = (passType, serialNumber) => {
+            if (!isString(passType) || !isString(serialNumber)) {
+                throw new PassNinjaInvalidArgumentsException('Must provide both passType and serialNumber to PassNinjaClient.deletePass method. PassNinjaClient.deletePass(passType: string, serialNumber: string)');
             }
             return this.#axiosClient
-                .delete(`/passes/${encodeURIComponent(serialNumber)}`)
+                .delete(`/passes/${encodeURIComponent(passType)}/${encodeURIComponent(serialNumber)}`)
                 .then(() => serialNumber);
         };
         if (!isString(accountId) || !isString(apiKey)) {
