@@ -1,66 +1,10 @@
 {
-  "landingUrl": "https://www.passninja.com/installs/EDmdQL187.html",
-  "apple": {
-    "formatVersion": 1,
-    "passTypeIdentifier": "pass.com.passninja.demo.coupon",
-    "webServiceURL": "https://ec-api.passninja.com",
-    "teamIdentifier": "Q338UYGFZ8",
-    "organizationName": "Ninji Sports",
-    "description": "Ninji Sports Coupon",
-    "foregroundColor": "rgb(255,255,255)",
-    "backgroundColor": "rgb(26,17,38)",
-    "labelColor": "rgb(255,232,195)",
-    "logoText": "Ninji Sports",
-    "suppressStripShine": false,
-    "userInfo": {"logoTextColor": "rgb(255,232,195)"},
-    "barcodes": [
-      {
-        "message": "Ninja Sports 2012-07-22T14:25-08:00",
-        "format": "PKBarcodeFormatPDF417",
-        "messageEncoding": "iso-8859-1"
-      }
-    ],
-    "coupon": {
-      "headerFields": [
-        {
-          "key": "expires",
-          "label": "Expires",
-          "dateStyle": "PKDateStyleMedium",
-          "timeStyle": "PKDateStyleNone",
-          "value": "2018-11-30T23:59+00:00"
-        }
-      ],
-      "primaryFields": [
-        {"key": "firstone", "value": "20% off", "label": "All Ninja Clothing"}
-      ],
-      "auxiliaryFields": [
-        {"key": "member", "value": "Ninji Nishimura", "label": "Member Name"},
-        {
-          "key": "special",
-          "value": "20% off only for the month of November",
-          "label": "Special Offer!"
-        }
-      ],
-      "backFields": [
-        {
-          "key": "terms",
-          "label": "Please Note",
-          "value": "Cannot be used in conjunction with any other offer."
-        }
-      ]
-    },
-    "locations": [
-      {"latitude": 37.3229, "longitude": -122.0323},
-      {"latitude": 37.3286, "longitude": -122.0143},
-      {
-        "altitude": 10,
-        "latitude": 37.331,
-        "longitude": -122.029,
-        "relevantText": "Store nearby on 3rd and 5th."
-      }
-    ],
-    "serialNumber": "e30603dc-1db9-44fa-8b44-c64a3a97d921",
-    "authenticationToken": "b2544f50cf381382"
-  },
-  "appleUrl": "https://s3.amazonaws.com/www.passninja.com-artifacts/passes/demo.coupon/e30603dc-1db9-44fa-8b44-c64a3a97d921/apple.pkpass?AWSAccessKeyId=ASIAY5CUFZ2DWH22U6NH&Expires=1601417046&Signature=upXsKmPm8KnW%2FX7Ml%2Bb%2BvOaCqy8%3D&x-amz-security-token=IQoJb3JpZ2luX2VjEFYaCXVzLWVhc3QtMSJHMEUCIGJOMF6DWMCG8D8ItA9AndYq9sCbN76wJZfMSL8E7Y8qAiEA1F7xuEBvA%2BtG2Dqwc2UJw1SOUzu%2FGxWSWsNFZ9uTgYYqzQEITxABGgw2MTIyMDkzODA5OTkiDFKSBhIThToaD9lIcCqqAaYbQZ%2F1A0MO%2B2xzleQF7Qg481uJgfAjtU2ykIu5ak4yov5ToWfu3521EakUV04IOgUeC%2FgJWo5jpdMog8sOsuuK6BPlZLjZb6iz%2FTCRboF%2BGzpuS1RwXhHWI9TeRg3iXsS9XLtQ0YJ9Nvb4ODSAquZ3w5%2B9G0knt8sDkIvNniVTWoIouicfGxwpRsm9jvXYnV2Qyh0mI%2F6NPB%2BuSbQVrIGRhc%2BZcVj3V5EbMNPEsPoFOuABCx2Tj70EWvBwUF9BultI0aStumV6AAqjrZAcAdb7qZtU6bxRby7alPYnIrNkNzNPeoGSVaZ96aQmxG9gAJwF3bYHayvMCB67w3nnxtbjTxh7OA15ZaoGpvZANy4ecBKzrY0aJBZP991nXlHYG3rrTpBKxzpLBobz2mim7kwGOrM%2F1DYg%2Fm5qxiBW%2BlNEtUvdVVTkAngHNr09ZBfs3KE%2BJLwgbwf5BpZsf99FqT07FPWhLp%2FkRZrF3p8h9Z9qBS54n3Z0eeDlVZrpNjslJpGhv29AlFoy0nRI3a%2BAP%2BBKXV0%3D"
+  "passType": "demo.coupon",
+  "serialNumber": "2dcf7187-4eea-42a2-aabe-d7ca5a78f3dd",
+  "pass": {"discount": "100%", "memberName": "Ted"},
+  "urls": {
+    "landing": "https://www.passninja.com/installs/Ao_VS8ces.html",
+    "google": "https://s3.amazonaws.com/www.passninja.com-artifacts/passes/demo.coupon/2dcf7187-4eea-42a2-aabe-d7ca5a78f3dd/google.link?AWSAccessKeyId=ASIAY5CUFZ2D7RGU2LW5&Expires=1601756619&Signature=%2FlBJdaSeOHakvsPG%2BgJskVa59Eo%3D&x-amz-security-token=IQoJb3JpZ2luX2VjELX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQDHxoHhHImoyc5kf9BzpHTfY94k8%2BG%2FFQBEsex8%2FdgeNwIgNcmOLIWcWSWCfGtuadF680%2BmmvtCi2JTwUcaCdhFVlIq1gEIrf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARABGgw2MTIyMDkzODA5OTkiDApshKVJ4O7c7hCZPiqqAZQxllngLeMaGjU8KDuJEze5eilSxOCwawDnUeUBYRre4nHA7A26ELQhhEPrLH1E7t7Cf1vxEGbTvaCy5Iz%2Fb0%2FSqPrfUfdmiiWnXbGymYz4PqPaJyRtipYpxVXaCs%2BqfzfL5cMi5Huie0wnUQxovjSYYMYGVLO3e%2BQqeLzElNyT3RiCIJIDoCM4yYUdsRO%2FTiodnIYd8wXrPJ%2BM8bK33ZKjrh5Jokc9Rz2%2FMJifxfoFOuAB2agjjkY8r0jl8InhizqUYjPOaRjSuIbEm%2BGD3UiHBLJWIUSkeOjOYC938My0%2FLw9PlZHItc8%2Fi7OQAWbXVGxTkU1ILqieII%2BAGnoz6pwBsYfQyQ9DMIbRl%2F%2Ff7pNkT%2F27kxuycs1463Dwd4ty6D76M8o6ipAbnAyJDejx3rWUh5Go9B0Rgs2iNG4Q%2Bc9LK0j9%2F68deIn%2FHfx4lbjH9AFBZTgeHrfzj8XbUDndT3cGd1%2BQUqDK25JQV7T4Fx8poonMElkuV6pkDNd9oxZqwZIUJbuyFhEZ%2FYwQ5kVWBCI8%2Fg%3D",
+    "apple": "https://s3.amazonaws.com/www.passninja.com-artifacts/passes/demo.coupon/2dcf7187-4eea-42a2-aabe-d7ca5a78f3dd/apple.pkpass?AWSAccessKeyId=ASIAY5CUFZ2D7RGU2LW5&Expires=1601756619&Signature=0X70GIT2%2B7EcJuv2tSdhpfhsTBk%3D&x-amz-security-token=IQoJb3JpZ2luX2VjELX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIQDHxoHhHImoyc5kf9BzpHTfY94k8%2BG%2FFQBEsex8%2FdgeNwIgNcmOLIWcWSWCfGtuadF680%2BmmvtCi2JTwUcaCdhFVlIq1gEIrf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARABGgw2MTIyMDkzODA5OTkiDApshKVJ4O7c7hCZPiqqAZQxllngLeMaGjU8KDuJEze5eilSxOCwawDnUeUBYRre4nHA7A26ELQhhEPrLH1E7t7Cf1vxEGbTvaCy5Iz%2Fb0%2FSqPrfUfdmiiWnXbGymYz4PqPaJyRtipYpxVXaCs%2BqfzfL5cMi5Huie0wnUQxovjSYYMYGVLO3e%2BQqeLzElNyT3RiCIJIDoCM4yYUdsRO%2FTiodnIYd8wXrPJ%2BM8bK33ZKjrh5Jokc9Rz2%2FMJifxfoFOuAB2agjjkY8r0jl8InhizqUYjPOaRjSuIbEm%2BGD3UiHBLJWIUSkeOjOYC938My0%2FLw9PlZHItc8%2Fi7OQAWbXVGxTkU1ILqieII%2BAGnoz6pwBsYfQyQ9DMIbRl%2F%2Ff7pNkT%2F27kxuycs1463Dwd4ty6D76M8o6ipAbnAyJDejx3rWUh5Go9B0Rgs2iNG4Q%2Bc9LK0j9%2F68deIn%2FHfx4lbjH9AFBZTgeHrfzj8XbUDndT3cGd1%2BQUqDK25JQV7T4Fx8poonMElkuV6pkDNd9oxZqwZIUJbuyFhEZ%2FYwQ5kVWBCI8%2Fg%3D"
+  }
 }

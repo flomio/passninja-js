@@ -54,10 +54,8 @@ describe('PassNinjaClient', () => {
       loyaltyLevel: 'level one',
       barcode: 'www.google.com',
     });
-    expect(createdPassObject.url).toBe(createPassFixture.landingUrl);
-    expect(createdPassObject.serialNumber).toBe(
-      createPassFixture.apple.serialNumber
-    );
+    expect(createdPassObject.url).toBe(createPassFixture.urls.landing);
+    expect(createdPassObject.serialNumber).toBe(createPassFixture.serialNumber);
   });
 
   test('getPass without passType or serialNumber throws an exception.', () => {
@@ -75,9 +73,7 @@ describe('PassNinjaClient', () => {
       createdPassObject.passType,
       createdPassObject.serialNumber
     );
-    expect(getPassResponse.apple.serialNumber).toBe(
-      createdPassObject.serialNumber
-    );
+    expect(getPassResponse.serialNumber).toBe(createdPassObject.serialNumber);
   });
 
   test('putPass without passType or serialNumber throws an exception.', () => {
@@ -105,15 +101,13 @@ describe('PassNinjaClient', () => {
         barcode: 'www.put.com',
       }
     );
-    expect(putPassResponse.apple.serialNumber).toBe(
-      createdPassObject.serialNumber
-    );
+    expect(putPassResponse.serialNumber).toBe(createdPassObject.serialNumber);
   });
 
-  test('deletePass without serialNumber throws an exception.', () => {
-    expect(() => testClient.pass.delete(undefined as any)).toThrow(
-      PassNinjaInvalidArgumentsException
-    );
+  test('deletePass without serialNumber or passType throws an exception.', () => {
+    expect(() =>
+      testClient.pass.delete(undefined as any, undefined as any)
+    ).toThrow(PassNinjaInvalidArgumentsException);
   });
 
   test('deletePass with serialNumber runs successfully.', async () => {
@@ -122,7 +116,10 @@ describe('PassNinjaClient', () => {
       request.respondWith({status: 200, response: {}});
     });
     await expect(
-      testClient.pass.delete(createdPassObject.serialNumber)
+      testClient.pass.delete(
+        createdPassObject.passType,
+        createdPassObject.serialNumber
+      )
     ).resolves.not.toThrow();
   });
 });

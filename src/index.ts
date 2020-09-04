@@ -84,9 +84,9 @@ export class PassNinjaClient {
       })
       .then(
         (data: any): SimplePassObject => ({
-          url: data.landingUrl,
-          serialNumber: data.apple.serialNumber,
-          passType,
+          url: data.urls.landing,
+          serialNumber: data.serialNumber,
+          passType: data.passType,
         })
       );
   };
@@ -97,13 +97,11 @@ export class PassNinjaClient {
         'Must provide both passType and serialNumber to PassNinjaClient.getPass method. PassNinjaClient.getPass(passType: string, serialNumber: string)'
       );
     }
-    return this.#axiosClient
-      .get(
-        `/passes/${encodeURIComponent(passType)}/${encodeURIComponent(
-          serialNumber
-        )}`
-      )
-      .then((data: any): any => data.jsonData);
+    return this.#axiosClient.get(
+      `/passes/${encodeURIComponent(passType)}/${encodeURIComponent(
+        serialNumber
+      )}`
+    );
   };
 
   #putPass = (
@@ -111,7 +109,7 @@ export class PassNinjaClient {
     serialNumber: string,
     clientPassData: ClientPassData
   ): Promise<AxiosResponse<any>> => {
-    if (!isString(serialNumber)) {
+    if (!isString(passType) || !isString(serialNumber)) {
       throw new PassNinjaInvalidArgumentsException(
         'Must provide both passType and serialNumber to PassNinjaClient.putPass method. PassNinjaClient.putPass(passType: string, serialNumber: string, clientPassData: ClientPassData)'
       );
@@ -135,14 +133,21 @@ export class PassNinjaClient {
     );
   };
 
-  #deletePass = (serialNumber: string): Promise<AxiosResponse<any>> => {
-    if (!isString(serialNumber)) {
+  #deletePass = (
+    passType: string,
+    serialNumber: string
+  ): Promise<AxiosResponse<any>> => {
+    if (!isString(passType) || !isString(serialNumber)) {
       throw new PassNinjaInvalidArgumentsException(
-        'Must provide serialNumber to PassNinjaClient.deletePass method. PassNinjaClient.deletePass(serialNumber: string)'
+        'Must provide both passType and serialNumber to PassNinjaClient.deletePass method. PassNinjaClient.deletePass(passType: string, serialNumber: string)'
       );
     }
     return this.#axiosClient
-      .delete(`/passes/${encodeURIComponent(serialNumber)}`)
+      .delete(
+        `/passes/${encodeURIComponent(passType)}/${encodeURIComponent(
+          serialNumber
+        )}`
+      )
       .then((): any => serialNumber);
   };
 }
