@@ -27,6 +27,6 @@ const passninja = new PassNinjaClient(accountId, apiKey);
   });
   console.log(JSON.stringify(myPass, 0, 2));
 
-  deletedPassSerialNumber = await passninja.pass.delete(myPass.serialNumber);
+  deletedPassSerialNumber = await passninja.pass.delete(myPass.passType, myPass.serialNumber);
   console.log(`Pass deleted. serial_number: ${deletedPassSerialNumber}));
 })();

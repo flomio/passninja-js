@@ -103,6 +103,7 @@ const simplePassObject = await passNinjaClient.pass.put(
 
 ```js
 const deletedPassSerialNumber = await passninja.pass.delete(
+    'demo.coupon', // passType,
     '840a0562-f22d-4ecf-a2d7-9ac785bed8e4' // serialNumber
 );
 console.log(`Pass deleted. serial_number: ${deletedPassSerialNumber})); })();
