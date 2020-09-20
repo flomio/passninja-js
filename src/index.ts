@@ -1,4 +1,4 @@
-import axios, {AxiosInstance, AxiosResponse} from 'axios';
+import axios, {AxiosInstance} from 'axios';
 import {
   ClientPassData,
   PassNinjaResponse,
@@ -108,7 +108,10 @@ export class PassNinjaClient {
     };
   };
 
-  #getPass = async (passType: string, serialNumber: string): Promise<any> => {
+  #getPass = async (
+    passType: string,
+    serialNumber: string
+  ): Promise<PassNinjaResponse> => {
     if (!isString(passType) || !isString(serialNumber)) {
       throw new PassNinjaInvalidArgumentsException(
         'Must provide both passType and serialNumber to PassNinjaClient.getPass method. PassNinjaClient.getPass(passType: string, serialNumber: string)'
@@ -128,7 +131,7 @@ export class PassNinjaClient {
     passType: string,
     serialNumber: string,
     clientPassData: ClientPassData
-  ): Promise<AxiosResponse<ClientPassData>> => {
+  ): Promise<PassNinjaResponse> => {
     if (!isString(passType) || !isString(serialNumber)) {
       throw new PassNinjaInvalidArgumentsException(
         'Must provide both passType and serialNumber to PassNinjaClient.putPass method. PassNinjaClient.putPass(passType: string, serialNumber: string, clientPassData: ClientPassData)'
@@ -159,7 +162,7 @@ export class PassNinjaClient {
   #deletePass = async (
     passType: string,
     serialNumber: string
-  ): Promise<AxiosResponse<ClientPassData>> => {
+  ): Promise<PassNinjaResponse> => {
     if (!isString(passType) || !isString(serialNumber)) {
       throw new PassNinjaInvalidArgumentsException(
         'Must provide both passType and serialNumber to PassNinjaClient.deletePass method. PassNinjaClient.deletePass(passType: string, serialNumber: string)'
