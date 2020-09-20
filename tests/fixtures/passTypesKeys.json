@@ -1,0 +1,13 @@
+{
+  "passType": "demo.coupon",
+  "keys": [
+    "barcode",
+    "description",
+    "expiration",
+    "logoText",
+    "loyaltyLevel",
+    "memberName",
+    "organizationName",
+    "specialOffer"
+  ]
+}

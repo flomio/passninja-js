@@ -2,6 +2,7 @@ import moxios from 'moxios';
 import {PassNinjaClient} from '../src/index';
 import {SimplePassObject} from '../src/types/general';
 import {PassNinjaInvalidArgumentsException} from '../src/types/exceptions';
+import passTypesKeysFixture from './fixtures/passTypesKeys.json';
 import createPassFixture from './fixtures/createPass.json';
 import getPassFixture from './fixtures/getPass.json';
 import putPassFixture from './fixtures/putPass.json';
@@ -23,23 +24,43 @@ describe('PassNinjaClient', () => {
     expect(testClient).toBeInstanceOf(PassNinjaClient);
   });
 
-  test('createPass without passType throws an exception.', () => {
-    expect(() =>
+  test('createPass without passType throws an exception.', async () => {
+    expect.assertions(1);
+    return expect(
       testClient.pass.create(undefined as any, undefined as any)
-    ).toThrow(PassNinjaInvalidArgumentsException);
+    ).rejects.toBeInstanceOf(PassNinjaInvalidArgumentsException);
   });
 
   test('createPass with passType but with invalid clientPassData keys throws an exception.', () => {
-    expect(() =>
+    expect.assertions(1);
+    return expect(
       testClient.pass.create('demo.coupon', {firstName: null as any})
-    ).toThrow(PassNinjaInvalidArgumentsException);
+    ).rejects.toBeInstanceOf(PassNinjaInvalidArgumentsException);
   });
 
   beforeAll(() => moxios.install());
   afterAll(() => moxios.uninstall());
 
+  test('createPass with passType but with missing clientPassData keys throws an exception.', () => {
+    expect.assertions(1);
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({status: 200, response: passTypesKeysFixture});
+    });
+    return expect(
+      testClient.pass.create('demo.coupon', {
+        barcode: '12345',
+        description: 'This is a test description.',
+      })
+    ).rejects.toBeInstanceOf(PassNinjaInvalidArgumentsException);
+  });
+
   test('createPass with valid passType and valid clientPassData runs successfully.', async () => {
     const passType = 'demo.coupon';
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({status: 200, response: passTypesKeysFixture});
+    });
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({status: 200, response: createPassFixture});
@@ -59,9 +80,10 @@ describe('PassNinjaClient', () => {
   });
 
   test('getPass without passType or serialNumber throws an exception.', () => {
-    expect(() =>
+    expect.assertions(1);
+    return expect(
       testClient.pass.get(undefined as any, undefined as any)
-    ).toThrow(PassNinjaInvalidArgumentsException);
+    ).rejects.toBeInstanceOf(PassNinjaInvalidArgumentsException);
   });
 
   test('getPass with passType and serialNumber runs successfully.', async () => {
@@ -77,9 +99,10 @@ describe('PassNinjaClient', () => {
   });
 
   test('putPass without passType or serialNumber throws an exception.', () => {
-    expect(() =>
+    expect.assertions(1);
+    return expect(
       testClient.pass.put(undefined as any, undefined as any, {})
-    ).toThrow(PassNinjaInvalidArgumentsException);
+    ).rejects.toBeInstanceOf(PassNinjaInvalidArgumentsException);
   });
 
   test('putPass with serialNumber and clientStatsData runs successfully.', async () => {
@@ -105,9 +128,10 @@ describe('PassNinjaClient', () => {
   });
 
   test('deletePass without serialNumber or passType throws an exception.', () => {
-    expect(() =>
+    expect.assertions(1);
+    return expect(
       testClient.pass.delete(undefined as any, undefined as any)
-    ).toThrow(PassNinjaInvalidArgumentsException);
+    ).rejects.toBeInstanceOf(PassNinjaInvalidArgumentsException);
   });
 
   test('deletePass with serialNumber runs successfully.', async () => {
