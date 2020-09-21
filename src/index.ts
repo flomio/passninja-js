@@ -1,5 +1,9 @@
-import axios, {AxiosInstance, AxiosResponse, AxiosError} from 'axios';
-import {ClientPassData, SimplePassObject} from './types/general';
+import axios, {AxiosInstance} from 'axios';
+import {
+  ClientPassData,
+  PassNinjaResponse,
+  SimplePassObject,
+} from './types/general';
 import {PassNinjaInvalidArgumentsException} from './types/exceptions';
 import {isString} from './types/typeUtils';
 
@@ -24,16 +28,8 @@ export class PassNinjaClient {
         'x-api-key': apiKey,
       },
     });
-    this.#initializeInterceptors();
     this.#initBindings();
   }
-
-  #initializeInterceptors = (): void => {
-    this.#axiosClient.interceptors.response.use(
-      this.#handleResponse,
-      this.#handleError
-    );
-  };
 
   #initBindings = (): void => {
     this.pass.create = this.#createPass.bind(this);
@@ -41,11 +37,6 @@ export class PassNinjaClient {
     this.pass.put = this.#putPass.bind(this);
     this.pass.delete = this.#deletePass.bind(this);
   };
-
-  #handleResponse = ({data}: AxiosResponse): AxiosResponse<any> => data;
-
-  #handleError = (error: AxiosError): Promise<AxiosError> =>
-    Promise.reject(error);
 
   #extractInvalidKeys = (
     clientPassData: ClientPassData
@@ -60,7 +51,23 @@ export class PassNinjaClient {
       {}
     );
 
-  #createPass = (
+  #fetchRequiredKeysSet = async (passType: string): Promise<Set<string>> => {
+    const passTypeKeysResponse = await this.#axiosClient.get<PassNinjaResponse>(
+      `/passtypes/keys/${passType}`
+    );
+    return new Set(passTypeKeysResponse.data.keys);
+  };
+
+  #extractMissingRequiredKeys = async (
+    passType: string,
+    clientPassData: ClientPassData
+  ): Promise<string[]> => {
+    const requiredKeysSet = await this.#fetchRequiredKeysSet(passType);
+    Object.keys(clientPassData).forEach((key) => requiredKeysSet.delete(key));
+    return Array.from(requiredKeysSet);
+  };
+
+  #createPass = async (
     passType: string,
     clientPassData: ClientPassData
   ): Promise<SimplePassObject> => {
@@ -77,38 +84,54 @@ export class PassNinjaClient {
         )}`
       );
     }
-    return this.#axiosClient
+    const missingRequiredKeys = await this.#extractMissingRequiredKeys(
+      passType,
+      clientPassData
+    );
+    if (Object.keys(missingRequiredKeys).length !== 0) {
+      throw new PassNinjaInvalidArgumentsException(
+        `Some keys that are required for this passType are missing on the provided clientPassData object. Missing keys: ${JSON.stringify(
+          missingRequiredKeys
+        )}`
+      );
+    }
+    const axiosResponseData = await this.#axiosClient
       .post('/passes', {
         passType,
         pass: clientPassData,
       })
-      .then(
-        (data: any): SimplePassObject => ({
-          url: data.urls.landing,
-          serialNumber: data.serialNumber,
-          passType: data.passType,
-        })
-      );
+      .then((axiosResponse) => axiosResponse.data);
+    return {
+      url: axiosResponseData.urls.landing,
+      serialNumber: axiosResponseData.serialNumber,
+      passType: axiosResponseData.passType,
+    };
   };
 
-  #getPass = (passType: string, serialNumber: string): Promise<any> => {
+  #getPass = async (
+    passType: string,
+    serialNumber: string
+  ): Promise<PassNinjaResponse> => {
     if (!isString(passType) || !isString(serialNumber)) {
       throw new PassNinjaInvalidArgumentsException(
         'Must provide both passType and serialNumber to PassNinjaClient.getPass method. PassNinjaClient.getPass(passType: string, serialNumber: string)'
       );
     }
-    return this.#axiosClient.get(
-      `/passes/${encodeURIComponent(passType)}/${encodeURIComponent(
-        serialNumber
-      )}`
-    );
+    const axiosResponseData = await this.#axiosClient
+      .get(
+        `/passes/${encodeURIComponent(passType)}/${encodeURIComponent(
+          serialNumber
+        )}`
+      )
+      .then((axiosResponse) => axiosResponse.data);
+    return axiosResponseData;
   };
 
-  #putPass = (
+  #putPass = async (
     passType: string,
     serialNumber: string,
     clientPassData: ClientPassData
-  ): Promise<AxiosResponse<any>> => {
+  ): Promise<PassNinjaResponse> => {
     if (!isString(passType) || !isString(serialNumber)) {
       throw new PassNinjaInvalidArgumentsException(
         'Must provide both passType and serialNumber to PassNinjaClient.putPass method. PassNinjaClient.putPass(passType: string, serialNumber: string, clientPassData: ClientPassData)'
@@ -122,32 +145,36 @@ export class PassNinjaClient {
         )}`
       );
     }
-    return this.#axiosClient.put(
-      `/passes/${encodeURIComponent(passType)}/${encodeURIComponent(
-        serialNumber
-      )}`,
-      {
-        passType,
-        pass: clientPassData,
-      }
-    );
+    const axiosResponseData = this.#axiosClient
+      .put(
+        `/passes/${encodeURIComponent(passType)}/${encodeURIComponent(
+          serialNumber
+        )}`,
+        {
+          passType,
+          pass: clientPassData,
+        }
+      )
+      .then((axiosResponse) => axiosResponse.data);
+    return axiosResponseData;
   };
 
-  #deletePass = (
+  #deletePass = async (
     passType: string,
     serialNumber: string
-  ): Promise<AxiosResponse<any>> => {
+  ): Promise<PassNinjaResponse> => {
     if (!isString(passType) || !isString(serialNumber)) {
       throw new PassNinjaInvalidArgumentsException(
         'Must provide both passType and serialNumber to PassNinjaClient.deletePass method. PassNinjaClient.deletePass(passType: string, serialNumber: string)'
       );
     }
-    return this.#axiosClient
+    const axiosResponseData = this.#axiosClient
       .delete(
         `/passes/${encodeURIComponent(passType)}/${encodeURIComponent(
           serialNumber
         )}`
       )
       .then((): any => serialNumber);
+    return axiosResponseData;
   };
 }
