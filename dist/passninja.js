@@ -33,6 +33,7 @@ class PassNinjaClient {
             this.pass.get = this.#getPass.bind(this);
             this.pass.put = this.#putPass.bind(this);
             this.pass.delete = this.#deletePass.bind(this);
+            this.pass.find = this.#findPasses.bind(this);
         };
         this.#extractInvalidKeys = (clientPassData) => Object.keys(clientPassData).reduce((accum, key) => {
             if (!isString(clientPassData[key])) {
@@ -107,6 +108,15 @@ class PassNinjaClient {
                 .then(() => serialNumber);
             return axiosResponseData;
         };
+        this.#findPasses = async (passType) => {
+            if (!isString(passType)) {
+                throw new PassNinjaInvalidArgumentsException('Must provide passType to PassNinjaClient.find method. PassNinjaClient.find(passType: string)');
+            }
+            const axiosResponseData = this.#axiosClient
+                .get(`/passes/${encodeURIComponent(passType)}`)
+                .then((axiosResponse) => axiosResponse.data.passes);
+            return axiosResponseData;
+        };
         if (!isString(accountId) || !isString(apiKey)) {
             throw new PassNinjaInvalidArgumentsException('Must provide both accountId and apiKey to PassNinjaClient constructor. PassNinjaClient(accountId: string, apiKey: string)');
         }
@@ -130,6 +140,7 @@ class PassNinjaClient {
     #getPass;
     #putPass;
     #deletePass;
+    #findPasses;
 }
 
 exports.PassNinjaClient = PassNinjaClient;
