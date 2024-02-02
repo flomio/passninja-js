@@ -72,7 +72,7 @@ each method returns a promise.
 
 ```js
 const simplePassObject = await passNinjaClient.pass.create(
-  'demo.coupon', // passType
+  'ptk_0x14', // passType
   {discount: '50%', memberName: 'John'} // passData
 );
 console.log(simplePassObject.url);
@@ -80,11 +80,21 @@ console.log(simplePassObject.passType);
 console.log(simplePassObject.serialNumber);
 ```
 
+### Find
+
+Finds issued passes for a given pass template key
+
+```js
+const passObjects = await passNinjaClient.pass.find(
+  'ptk_0x14' // passType or pass template key
+);
+```
+
 ### Get
 
 ```js
 const detailedPassObject = await passNinjaClient.pass.get(
-  'demo.coupon', // passType
+  'ptk_0x14', // passType
   '840a0562-f22d-4ecf-a2d7-9ac785bed8e4' // serialNumber
 );
 ```
@@ -93,7 +103,7 @@ const detailedPassObject = await passNinjaClient.pass.get(
 
 ```js
 const simplePassObject = await passNinjaClient.pass.put(
-  'demo.coupon', // passType
+  'ptk_0x14', // passType
   '840a0562-f22d-4ecf-a2d7-9ac785bed8e4', // serialNumber
   {discount: '100%', memberName: 'Ted'} // passData
 );
@@ -103,7 +113,7 @@ const simplePassObject = await passNinjaClient.pass.put(
 
 ```js
 const deletedPassSerialNumber = await passninja.pass.delete(
-    'demo.coupon', // passType,
+    'ptk_0x14', // passType,
     '840a0562-f22d-4ecf-a2d7-9ac785bed8e4' // serialNumber
 );
 console.log(`Pass deleted. serial_number: ${deletedPassSerialNumber})); })();

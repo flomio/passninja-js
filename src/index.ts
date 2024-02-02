@@ -36,6 +36,7 @@ export class PassNinjaClient {
     this.pass.get = this.#getPass.bind(this);
     this.pass.put = this.#putPass.bind(this);
     this.pass.delete = this.#deletePass.bind(this);
+    this.pass.find = this.#findPasses.bind(this);
   };
 
   #extractInvalidKeys = (
@@ -175,6 +176,18 @@ export class PassNinjaClient {
         )}`
       )
       .then((): any => serialNumber);
+    return axiosResponseData;
+  };
+
+  #findPasses = async (passType: string): Promise<PassNinjaResponse[]> => {
+    if (!isString(passType)) {
+      throw new PassNinjaInvalidArgumentsException(
+        'Must provide passType to PassNinjaClient.find method. PassNinjaClient.find(passType: string)'
+      );
+    }
+    const axiosResponseData = this.#axiosClient
+      .get(`/passes/${encodeURIComponent(passType)}`)
+      .then((axiosResponse) => axiosResponse.data.passes);
     return axiosResponseData;
   };
 }
