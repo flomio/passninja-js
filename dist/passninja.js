@@ -34,6 +34,7 @@ class PassNinjaClient {
             this.pass.put = this.#putPass.bind(this);
             this.pass.delete = this.#deletePass.bind(this);
             this.pass.find = this.#findPasses.bind(this);
+            this.pass.decrypt = this.#decryptPass.bind(this);
         };
         this.#extractInvalidKeys = (clientPassData) => Object.keys(clientPassData).reduce((accum, key) => {
             if (!isString(clientPassData[key])) {
@@ -117,6 +118,18 @@ class PassNinjaClient {
                 .then((axiosResponse) => axiosResponse.data.passes);
             return axiosResponseData;
         };
+        this.#decryptPass = async (passType, payload) => {
+            if (!isString(passType) || !isString(payload)) {
+                throw new PassNinjaInvalidArgumentsException('Must provide passType and payload to PassNinjaClient.decrypt method. PassNinjaClient.decrypt(passType: string, payload: string)');
+            }
+            const axiosResponseData = this.#axiosClient
+                .post(`/passes/${encodeURIComponent(passType)}`, {
+                passType,
+                payload
+            })
+                .then((axiosResponse) => axiosResponse.data);
+            return axiosResponseData;
+        };
         if (!isString(accountId) || !isString(apiKey)) {
             throw new PassNinjaInvalidArgumentsException('Must provide both accountId and apiKey to PassNinjaClient constructor. PassNinjaClient(accountId: string, apiKey: string)');
         }
@@ -141,6 +154,7 @@ class PassNinjaClient {
     #putPass;
     #deletePass;
     #findPasses;
+    #decryptPass;
 }
 
 exports.PassNinjaClient = PassNinjaClient;

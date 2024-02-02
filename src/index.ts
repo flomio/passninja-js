@@ -37,6 +37,7 @@ export class PassNinjaClient {
     this.pass.put = this.#putPass.bind(this);
     this.pass.delete = this.#deletePass.bind(this);
     this.pass.find = this.#findPasses.bind(this);
+    this.pass.decrypt = this.#decryptPass.bind(this);
   };
 
   #extractInvalidKeys = (
@@ -188,6 +189,21 @@ export class PassNinjaClient {
     const axiosResponseData = this.#axiosClient
       .get(`/passes/${encodeURIComponent(passType)}`)
       .then((axiosResponse) => axiosResponse.data.passes);
+    return axiosResponseData;
+  };
+
+  #decryptPass = async (passType: string, payload: string): Promise<PassNinjaResponse> => {
+    if (!isString(passType) || !isString(payload)) {
+      throw new PassNinjaInvalidArgumentsException(
+        'Must provide passType and payload to PassNinjaClient.decrypt method. PassNinjaClient.decrypt(passType: string, payload: string)'
+      );
+    }
+    const axiosResponseData = this.#axiosClient
+      .post(`/passes/${encodeURIComponent(passType)}`, {
+        passType,
+        payload
+      })
+     .then((axiosResponse) => axiosResponse.data);
     return axiosResponseData;
   };
 }
