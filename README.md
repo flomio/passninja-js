@@ -110,6 +110,15 @@ const detailedPassObject = await passNinjaClient.pass.get(
 );
 ```
 
+### Get Pass Template Details
+
+```js
+const passTemplate = await passNinjaClient.passTemplates.find(
+  'ptk_0x14', // passTemplate key
+);
+console.log(passTemplate.pass_type_id);
+```
+
 ### Update
 
 ```js

@@ -3,6 +3,7 @@ import {
   ClientPassData,
   PassNinjaResponse,
   SimplePassObject,
+  PassTemplateObject,
 } from './types/general';
 import {PassNinjaInvalidArgumentsException} from './types/exceptions';
 import {isString} from './types/typeUtils';
@@ -13,6 +14,7 @@ export class PassNinjaClient {
   #basePath = PASSNINJA_BASE_PATH;
   #axiosClient: AxiosInstance;
   pass: Record<string, any> = {};
+  passTemplate: Record<string, any> = {};
 
   constructor(accountId: string, apiKey: string) {
     if (!isString(accountId) || !isString(apiKey)) {
@@ -38,6 +40,7 @@ export class PassNinjaClient {
     this.pass.delete = this.#deletePass.bind(this);
     this.pass.find = this.#findPasses.bind(this);
     this.pass.decrypt = this.#decryptPass.bind(this);
+    this.passTemplate.find = this.#findPassTemplate.bind(this);
   };
 
   #extractInvalidKeys = (
@@ -67,6 +70,22 @@ export class PassNinjaClient {
     const requiredKeysSet = await this.#fetchRequiredKeysSet(passType);
     Object.keys(clientPassData).forEach((key) => requiredKeysSet.delete(key));
     return Array.from(requiredKeysSet);
+  };
+
+  #findPassTemplate = async (
+    passTemplateId: string,
+  ): Promise<PassTemplateObject> => {
+    if (!isString(passTemplateId)) {
+      throw new PassNinjaInvalidArgumentsException(
+        'Must provide passTemplateId to PassNinjaClient.findPassTemplate method. PassNinjaClient.findPassTemplate(passTemplateId: string)'
+      );
+    }
+    const axiosResponseData = await this.#axiosClient
+      .get(
+        `/pass_templates/${encodeURIComponent(passTemplateId)}`
+      )
+      .then((axiosResponse) => axiosResponse.data);
+    return axiosResponseData;
   };
 
   #createPass = async (
