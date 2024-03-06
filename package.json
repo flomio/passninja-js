@@ -1,6 +1,6 @@
 {
   "name": "@passninja/passninja-js",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "PassNinja pass creation helper library.",
   "main": "dist/passninja.js",
   "module": "dist/passninja.esm.js",
