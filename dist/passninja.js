@@ -148,8 +148,7 @@ class PassNinjaClient {
             throw new PassNinjaInvalidArgumentsException('Must provide passType and payload to PassNinjaClient.decrypt method. PassNinjaClient.decrypt(passType: string, payload: string)');
         }
         const axiosResponseData = this.#axiosClient
-            .post(`/passes/${encodeURIComponent(passType)}`, {
-            passType,
+            .post(`/passes/${encodeURIComponent(passType)}/decrypt`, {
             payload
         })
             .then((axiosResponse) => axiosResponse.data);

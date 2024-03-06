@@ -218,8 +218,7 @@ export class PassNinjaClient {
       );
     }
     const axiosResponseData = this.#axiosClient
-      .post(`/passes/${encodeURIComponent(passType)}`, {
-        passType,
+      .post(`/passes/${encodeURIComponent(passType)}/decrypt`, {
         payload
       })
      .then((axiosResponse) => axiosResponse.data);
